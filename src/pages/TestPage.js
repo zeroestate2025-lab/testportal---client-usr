@@ -166,10 +166,10 @@ export default function TestPage() {
     return (
       <div className="container container-center text-center">
         <h3 className="text-warning">⚠️ Test Not Active</h3>
-        <p>Waiting for admin to start the test...</p>
-        <button className="btn btn-primary mt-3" onClick={() => navigate("/")}>
+        <p>Waiting for admin to start the test... Please restore the page for sometime while</p>
+        {/* <button className="btn btn-primary mt-3" onClick={() => navigate("/")}>
           Back to Home
-        </button>
+        </button> */}
       </div>
     );
 
