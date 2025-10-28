@@ -80,17 +80,21 @@ export default function AdminDashboard() {
   };
 
   // ✅ Clear last waiting user
-  const handleClearLastWaitingUser = async () => {
-    if (!window.confirm("Are you sure you want to delete the last waiting user?")) return;
-    try {
-      const res = await API.waitingUsers.deleteLast();
-      alert(res.data.message || "Last waiting user deleted.");
-      await fetchWaitingUsers();
-    } catch (err) {
-      console.error("❌ Error deleting last waiting user:", err);
-      alert(err.response?.data?.error || "Failed to delete last waiting user.");
-    }
-  };
+ const handleClearLastWaitingUser = async (status = "") => {
+  const confirmMsg = status
+    ? `Delete last ${status} user?`
+    : "Delete last user (any status)?";
+
+  if (!window.confirm(confirmMsg)) return;
+  try {
+    const res = await API.delete(`/waiting-users/last${status ? `?status=${status}` : ""}`);
+    alert(res.data.message);
+    await fetchWaitingUsers();
+  } catch (err) {
+    console.error("❌ Error deleting last user:", err);
+    alert(err.response?.data?.error || "Failed to delete user.");
+  }
+};
 
   // ✅ Fetch Questions
   const fetchQuestions = async () => {
@@ -256,13 +260,11 @@ export default function AdminDashboard() {
             <div className="card form-section mt-4">
               <div className="d-flex justify-content-between align-items-center">
                 <h5>🕒 Live Waiting Users</h5>
-                <button
-                  className="btn btn-sm btn-outline-danger"
-                  onClick={handleClearLastWaitingUser}
-                  disabled={waitingUsers.length === 0}
-                >
-                  🗑️ Clear Last Entry
-                </button>
+               <button onClick={() => handleClearLastWaitingUser()}>🗑️ Clear Any Last User</button>
+                <button onClick={() => handleClearLastWaitingUser("waiting")}>🗑️ Clear Waiting</button>
+                <button onClick={() => handleClearLastWaitingUser("active")}>🗑️ Clear Active</button>
+                <button onClick={() => handleClearLastWaitingUser("finished")}>🗑️ Clear Finished</button>
+
               </div>
 
               <p className="text-muted mb-2">

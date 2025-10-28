@@ -64,6 +64,7 @@ const waitingUsers = {
   getAll: () => API.get("/waiting-users"),
   getCount: () => API.get("/waiting-users/count"),
   deleteLast: () => API.delete("/waiting-users/last"),
+  activateAll: () => API.put("/waiting-users/activate-all"), // ✅ new
 };
 
 // 🧩 Combine all
