@@ -9,13 +9,40 @@ export default function Home() {
   const [numQ, setNumQ] = useState(10);
   const navigate = useNavigate();
 
-  const handleStart = () => {
+  // const handleStart = () => {
+  //   if (!fullName.trim() || !email.trim()) {
+  //     return alert("Please enter your full name and email.");
+  //   }
+  //   // Navigate to test page with state (we pass via router state)
+  //   navigate("/test", { state: { fullName, email, numQ } });
+  // };
+
+    const handleStart = async () => {
     if (!fullName.trim() || !email.trim()) {
       return alert("Please enter your full name and email.");
     }
-    // Navigate to test page with state (we pass via router state)
-    navigate("/test", { state: { fullName, email, numQ } });
+
+    try {
+      const res = await fetch("http://localhost:5000/api/user/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ fullName, email }),
+      });
+      const data = await res.json();
+
+      if (res.ok) {
+        console.log("✅ Registered:", data);
+        // Go to test waiting screen (or directly test page later)
+        navigate("/test", { state: { fullName, email, numQ, userId: data.userId } });
+      } else {
+        alert(data.error || "Registration failed.");
+      }
+    } catch (error) {
+      console.error("❌ Registration error:", error);
+      alert("Something went wrong.");
+    }
   };
+
 
   return (
     <div className="container container-center">
