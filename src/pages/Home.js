@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../styles/Home.css";
-import API from "../api/api"; // ✅ Import your combined API file
+import API from "../services/api"; // ✅ Import your combined API file
 
 export default function Home() {
   const [fullName, setFullName] = useState("");
