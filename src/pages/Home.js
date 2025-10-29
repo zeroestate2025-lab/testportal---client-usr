@@ -99,11 +99,6 @@ export default function Home() {
     </div>
   );
 }
-<<<<<<< HEAD
-
-
-=======
->>>>>>> 9d048a31f5c1991c8024caca7709932b4ccd7fe5
 // import React, { useState } from "react";
 // import { useNavigate } from "react-router-dom";
 // import "../styles/Home.css";
